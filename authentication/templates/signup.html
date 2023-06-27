@@ -1,6 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Login Page{% endblock %}
+{% block title %}Sign Up{% endblock %}
 {% block content %}
     <h1> Sign up </h1>
-
+    <h2>Are you a student, sponsor, or administrator?</h2>
+    <form>
+        <a class="btn btn-primary" href="/auth/sign-up/student" role="button">Student</a>
+        <a class="btn btn-primary" href="/auth/sign-up/sponsor" role="button">Sponsor</a>
+        <a class="btn btn-primary" href="/auth/sign-up/admin" role="button">Administrator</a>
+    </form>
 {% endblock %}

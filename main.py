@@ -9,6 +9,7 @@ app.register_blueprint(auth, url_prefix="/auth")
 cred = credentials.Certificate('key.json')
 default_app = initialize_app(cred)
 db = firestore.client()
+school_collection = Collection(db, 'school')
 
 @app.route('/')
 def index():
