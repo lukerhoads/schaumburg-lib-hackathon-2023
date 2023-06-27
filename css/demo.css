@@ -1,4 +1,4 @@
-
+/* navigation here*/
 .navbar {
     background-color:rgb(55, 55, 249);
     overflow: hidden;
@@ -25,4 +25,8 @@
 
 .navbar-right{
     float:right; 
+}
+/* Main content */ 
+.mainCt {
+    text-align:center;
 }
