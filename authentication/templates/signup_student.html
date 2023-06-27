@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 {% block title %}Student Sign Up{% endblock %}
 {% block content %}
-    
+    <form>
+        <h1>Student Sign Up</h1>
+        <label for="student"><b>Name</b></label>
+        <input type="text" placeholder="Enter Name (First and Last)" name="name" id="name" required>
+
+        <label for="email"><b>Email</b></label>
+        <input type="email" placeholder="Enter school email" name="email" id="email" required>
+
+        <label for="email"><b>School</b></label>
+        <input type="text" placeholder="Enter school name" name="school" id="school" required>
+
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
 {% endblock %}
