@@ -1,8 +1,12 @@
-<!DOCTYPE html>
-<html>
-<body>
-
-<h1> Hello World <h1>
-
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Clubs{% endblock %}
+{% block content %}
+    <h1>Hello, {% data.user.name %}</h1> 
+    <h1>Clubs:</h1>
+    {% for club in data.clubs() %}
+        <div>
+            <div>Club name: {% club.name %}</div>
+            <a href="">Link</a>
+        </div>
+    {% endfor %}
+{% endblock %}
