@@ -1,0 +1,28 @@
+
+.navbar {
+    background-color:rgb(55, 55, 249);
+    overflow: hidden;
+}
+.navbar a {
+    float:left;
+    color:white;
+    padding: 14px 16px;
+    text-decoration:none; 
+    text-align:center;
+    font-size:18px;
+
+
+}
+.navbar a:hover {
+    background-color: black;
+    color:white;
+}
+
+.navbar a.active{
+    background-color:rgb(17, 17, 241);
+    color:white;
+}
+
+.navbar-right{
+    float:right; 
+}
