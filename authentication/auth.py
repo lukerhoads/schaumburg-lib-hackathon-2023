@@ -1,8 +1,12 @@
 from flask import Blueprint, make_response, render_template, request
-import db 
+from db import get_interactor 
+from firebase_admin import credentials, firestore, initialize_app
+
+# cred = credentials.Certificate("key.json")
+# dbapp = initialize_app(cred)
 
 auth = Blueprint("auth", __name__, static_folder="static", template_folder="templates")
-interactor = db.get_interactor()
+interactor = get_interactor()
 
 @auth.route("/login")
 def login():

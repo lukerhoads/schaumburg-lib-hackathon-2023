@@ -1,10 +1,9 @@
 from firebase_admin import credentials, firestore, initialize_app
-from db import Collection, DatabaseInteractor
+from db import get_interactor
 
 cred = credentials.Certificate('key.json')
 default_app = initialize_app(cred)
-db = firestore.client()
-db_interactor = DatabaseInteractor(db)
+db_interactor = get_interactor()
 
 # Random test code
 student_id = db_interactor.create_student(schoolId=0, name="HPHS", email="hello@hello.com")

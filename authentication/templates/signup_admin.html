@@ -2,5 +2,38 @@
 {% extends "base.html" %}
 {% block title %}Admin Sign Up{% endblock %}
 {% block content %}
-    
+<div class="jumbotron vertical-center">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-4">
+                <div class="card shadow-2-strong bg-light border-primary" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <form>
+                            <h1 class="text-center">School Sign Up</h1>
+                            <div class="form-group mb-3">
+                                <label for="admin-name">Name</label>
+                                <input type="text" class="form-control" placeholder="Enter Name (First and Last)" name="admin-name" id="admin-name" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="admin-email">Email</label>
+                                <input type="admin-email" class="form-control" placeholder="Enter your personal email" name="admin-email" id="admin-email" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="school">School</label>
+                                <input type="text" class="form-control" placeholder="Enter the school name" name="school" id="school" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="domain">Email Domain</label>
+                                <textarea type="text" class="form-control" placeholder="Enter email domain of your organization (ex. @students.d999.org)" name="domain" id="domain" required></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>   
 {% endblock %}

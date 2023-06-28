@@ -6,9 +6,6 @@ from db import Collection, DatabaseInteractor, get_interactor
 app = Flask(__name__)
 app.register_blueprint(auth, url_prefix="/auth")
 
-cred = credentials.Certificate("key.json")
-dbapp = initialize_app(cred)
-
 interactor = get_interactor()
 
 @app.route('/')

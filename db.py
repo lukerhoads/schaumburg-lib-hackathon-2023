@@ -1,6 +1,6 @@
 from firebase_admin import credentials, firestore, initialize_app, _apps, get_app
 
-app_created = False
+initialized = False
 
 # Functions needed:
 # - List clubs by school ID
@@ -9,7 +9,17 @@ app_created = False
 # - Add administrator to a club
 # - Add a club with a school id
 def get_interactor():
-    db = firestore.Client()
+    global initialized
+    dbapp = None
+    if initialized == False:
+        cred = credentials.Certificate("key.json")
+        dbapp = initialize_app(cred, name="Schaumburg Library Hackathon")
+        initialized = True
+    else:
+        dbapp = get_app(name="Schaumburg Library Hackathon")
+    print("before")
+    db = firestore.client(dbapp)
+    print("after")
     interactor = DatabaseInteractor(db)
     return interactor
 
