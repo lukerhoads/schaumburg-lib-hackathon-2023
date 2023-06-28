@@ -49,6 +49,9 @@ class DatabaseInteractor:
         return mapper.get(collection)
 
     def create_school(self, name, emailSuffixes, adminEmail):
+        # Check that school does not already exist
+        # schools = 
+
         id = self.school_collection.create({
             "name": name,
             "emailSuffixes": emailSuffixes,
