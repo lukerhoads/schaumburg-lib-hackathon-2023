@@ -2,7 +2,7 @@ from flask import Blueprint, make_response, render_template, request
 import db 
 
 auth = Blueprint("auth", __name__, static_folder="static", template_folder="templates")
-interactor = db.get_interactor("key.json")
+interactor = db.get_interactor()
 
 @auth.route("/login")
 def login():
@@ -34,7 +34,7 @@ def signupSponsor():
         email = request.form.get("email")
         school = request.form.get("school")
         tags = request.form.get("tags")
-        id = interactor.create_student(schoolId=school, name=name, email=email)
+        id = interactor.crea(schoolId=school, name=name, email=email)
         resp = make_response()
         resp.set_cookie('userIDD', id)
         return resp

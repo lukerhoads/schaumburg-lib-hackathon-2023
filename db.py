@@ -1,6 +1,6 @@
-from firebase_admin import credentials, firestore, initialize_app, _apps
+from firebase_admin import credentials, firestore, initialize_app, _apps, get_app
 
-interactor = None
+app_created = False
 
 # Functions needed:
 # - List clubs by school ID
@@ -8,12 +8,7 @@ interactor = None
 # - Add student to a club
 # - Add administrator to a club
 # - Add a club with a school id
-def get_interactor(cred_path):
-    global interactor
-    if interactor:
-        return interactor
-    cred = credentials.Certificate(cred_path)
-    interactor = initialize_app(cred)
+def get_interactor():
     db = firestore.Client()
     interactor = DatabaseInteractor(db)
     return interactor
@@ -86,6 +81,23 @@ class DatabaseInteractor:
 
         # Create student and return ID
         id = self.student_collection.create({
+            "name": name,
+            "email": email,
+            "school": schoolId,
+            "clubs": []
+        })
+
+        return id
+
+    def create_sponsor(self, schoolId, name, email, tags):
+        # Check that school does not already exist
+        students = self.sponsor_collection.read_all()
+        for sponsor in sponsors:
+            if sponsor["name"] == name:
+                raise ValueError("Sponsor with that name already exists")
+
+        # Create student and return ID
+        id = self.sponsor_collection.create({
             "name": name,
             "email": email,
             "school": schoolId,
