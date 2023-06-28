@@ -1,11 +1,33 @@
+<!DOCTYPE html>
 {% extends "base.html" %}
 {% block title %}Sign Up{% endblock %}
 {% block content %}
-    <h1> Sign up </h1>
-    <h2>Are you a student, sponsor, or administrator?</h2>
-    <form>
-        <a class="btn btn-primary" href="/auth/sign-up/student" role="button">Student</a>
-        <a class="btn btn-primary" href="/auth/sign-up/sponsor" role="button">Sponsor</a>
-        <a class="btn btn-primary" href="/auth/sign-up/admin" role="button">Administrator</a>
-    </form>
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-4">
+                <div class="card shadow-2-strong bg-light" style="border-radius: 15px;">
+                    <div class="card-body p-5 p-md-3">
+                        <div class="row text-center">
+                            <h3>Are you a...</h3>
+                        </div>
+                        <form>
+                            <div class="mb-1">
+                                <button class="btn btn-primary btn-lg btn-block" href="/auth/sign-up/student" role="button">Student</button>
+                            </div>
+                            <div class="mb-1">
+                                <button class="btn btn-primary btn-lg btn-block" href="/auth/sign-up/sponsor" role="button">Sponsor</button>
+                            </div>
+                            <div class="mb-1">
+                                <button class="btn btn-primary btn-lg btn-block" href="/auth/sign-up/admin" role="button">Administrator</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
+    
 {% endblock %}
