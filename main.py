@@ -1,15 +1,12 @@
 from flask import Flask, render_template, url_for, redirect
 from authentication.auth import auth
 from firebase_admin import credentials, firestore, initialize_app
-from db import Collection
+from db import Collection, DatabaseInteractor
 
 app = Flask(__name__)
 app.register_blueprint(auth, url_prefix="/auth")
 
-cred = credentials.Certificate('key.json')
-default_app = initialize_app(cred)
-db = firestore.client()
-school_collection = Collection(db, 'school')
+interactor = db.get_interactor()
 
 @app.route('/')
 def index():
@@ -23,13 +20,21 @@ def index():
     # - User name
     # - Clubs the user belongs to
     data = {}
+    data["clubs"] = interactor.get_clubs_by_school_id(user["school"])
     return render_template("index.html", data=data)
 
-@app.route('/<clubId>')
+@app.route('/<clubId>', methods=["GET", "POST"])
 def clubPage(clubId):
+    if request.method == "POST":
+        # Post creation
+        pass
     # Get club ID from database
     data = {}
+    data["posts"] = interactor.posts_by_club_id(clubId)
+    data["club"] = interactor.get_collection('clubs').read(clubId)
+    data["userInClub"] = False
     return render_template("club.html", data=data)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
