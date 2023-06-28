@@ -53,10 +53,10 @@ input[type=text], input[type=password] {
     background: #fccb90;
     
     /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    background: -webkit-linear-gradient(to right, #3614e2, #1115df, #2c1c7c, #4119de);
     
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    background: linear-gradient(to right, #6618e3, #2647d9, #5319e5, #3219ea);
     }
     
     @media (min-width: 768px) {
