@@ -1,12 +1,12 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, request
 from authentication.auth import auth
 from firebase_admin import credentials, firestore, initialize_app
-from db import Collection, DatabaseInteractor
+from db import Collection, DatabaseInteractor, get_interactor
 
 app = Flask(__name__)
 app.register_blueprint(auth, url_prefix="/auth")
 
-interactor = db.get_interactor()
+interactor = get_interactor("key.json")
 
 @app.route('/')
 def index():

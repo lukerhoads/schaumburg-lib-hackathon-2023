@@ -1,7 +1,6 @@
-from flask import Flask, render_template, url_for, redirect
-from authentication.auth import auth
-from firebase_admin import credentials, firestore, initialize_app
-from db import Collection, DatabaseInteractor
+from firebase_admin import credentials, firestore, initialize_app, _apps
+
+interactor = None
 
 # Functions needed:
 # - List clubs by school ID
@@ -10,13 +9,11 @@ from db import Collection, DatabaseInteractor
 # - Add administrator to a club
 # - Add a club with a school id
 def get_interactor(cred_path):
+    global interactor
+    if interactor:
+        return interactor
     cred = credentials.Certificate(cred_path)
-    default_app = None 
-    if not _apps:
-        default_app = initialize_app(cred)
-    else:
-        default_app = get_app()
-
+    interactor = initialize_app(cred)
     db = firestore.Client()
     interactor = DatabaseInteractor(db)
     return interactor
@@ -35,12 +32,14 @@ class Collection:
     def update(self, id, object):
         self.collection.document(str(id)).update(object)
 
-    def read(self, id):
-        if id != None:
-            item = self.collection.document(str(id)).get()
-            return item.to_dict()
+    def read_all(self):
         items = [doc.to_dict() for doc in self.collection.stream()]
         return items
+
+    def read(self, id):
+        item = self.collection.document(str(id)).get()
+        return item.to_dict()
+        
         
 class DatabaseInteractor:
     def __init__(self, db):
@@ -64,7 +63,7 @@ class DatabaseInteractor:
 
     def create_school(self, name, emailSuffixes, adminEmail):
         # Check that school does not already exist
-        schools = self.school_collection.read()
+        schools = self.school_collection.read_all()
         for school in schools:
             if school["name"] == name:
                 raise ValueError("School with that name already exists")
@@ -80,7 +79,7 @@ class DatabaseInteractor:
 
     def create_student(self, schoolId, name, email):
         # Check that school does not already exist
-        students = self.student_collection.read()
+        students = self.student_collection.read_all()
         for student in students:
             if student["name"] == name:
                 raise ValueError("Student with that name already exists")
@@ -99,7 +98,7 @@ class DatabaseInteractor:
         student = self.student_collection.read(studentId)
 
         # Check that school does not already exist
-        clubs = self.school_collection.read()
+        clubs = self.school_collection.read_all()
         for club in clubs:
             if club["name"] == name and club["school"] == student["school"]:
                 raise ValueError("Club with that name at that school already exists")
@@ -116,7 +115,8 @@ class DatabaseInteractor:
 
         return id
 
-    def create_post(self, content, clubId)
+    def create_post(self, content, clubId):
+        pass
     
     def add_student_to_club(self, studentId, clubId):
         prevStudent = self.student_collection.read(studentId)
@@ -141,7 +141,7 @@ class DatabaseInteractor:
         return [club for club in clubs if club.school == schoolId]
 
     def posts_by_club_id(self, clubId):
-        posts = self.post_collection.read()
+        posts = self.post_collection.read_all()
         postArr = []
         for post in posts:
             if post["club"] == clubId:
