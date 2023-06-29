@@ -132,7 +132,7 @@ class DatabaseInteractor:
         student = self.student_collection.read(studentId)
 
         # Check that school does not already exist
-        clubs = self.school_collection.read_all()
+        clubs = self.club_collection.read_all()
         for club in clubs:
             if club["name"] == name and club["school"] == student["school"]:
                 raise ValueError("Club with that name at that school already exists")
@@ -144,6 +144,46 @@ class DatabaseInteractor:
             "posts": [],
             "administrator": None,
             "students": [studentId]
+        })
+
+        return id
+
+    def create_club_as_sponsor(self, name, tags, sponsorId):
+        student = self.student_collection.read(sponsorId)
+
+        # Check that school does not already exist
+        clubs = self.club_collection.read_all()
+        for club in clubs:
+            if club["name"] == name and club["school"] == school["id"]:
+                raise ValueError("Club with that name at that school already exists")
+
+        id = self.club_collection.create({
+            "school": student["school"],
+            "name": name,
+            "tags": tags,
+            "posts": [],
+            "administrator": student,
+            "students": []
+        })
+
+        return id
+
+    def create_club_as_admin(self, name, tags, adminId):
+        school = self.school_collection.read(adminId)
+
+        # Check that school does not already exist
+        clubs = self.club_collection.read_all()
+        for club in clubs:
+            if club["name"] == name and club["school"] == school["id"]:
+                raise ValueError("Club with that name at that school already exists")
+
+        id = self.club_collection.create({
+            "school": school["id"],
+            "name": name,
+            "tags": tags,
+            "posts": [],
+            "administrator": None,
+            "students": []
         })
 
         return id

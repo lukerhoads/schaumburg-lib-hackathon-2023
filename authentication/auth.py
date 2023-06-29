@@ -33,7 +33,7 @@ def login():
             return resp
         elif admin != None:
             resp = make_response(redirect("/"))
-            cookie_val = "admin " + str(school["id"])
+            cookie_val = "admin " + str(admin["id"])
             resp.set_cookie('userIDD', cookie_val)
             return resp
 

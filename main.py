@@ -40,7 +40,12 @@ def index():
             data["clubs"] = clubs
             return render_template("index.html", data=data)
         elif user_type == "admin":
-            return redirect("/admin")
+            data = {}
+            user = interactor.get_collection('school').read(user_id)
+            data["user"] = user
+            data["clubs"] = interactor.clubs_by_school_id(user["id"])
+            data["type"] = "admin"
+            return render_template("index.html", data=data)
             # admin panel url: /admin
 
     # If no user, redirect to login
@@ -58,13 +63,20 @@ def error():
 @app.route('/club', methods=["POST"])
 def club():
     user_id, user_type = get_user()
-    if user_id != None and user_type == "student":
+    if user_id != None:
         name = request.form.get("name")
         tags = request.form.get("tags")
-        id = interactor.create_club(name=name, tags=tags, studentId=user_id)
+        if user_type == "student":
+            id = interactor.create_club(name=name, tags=tags, studentId=user_id)
+        elif user_type == "admin":
+            id = interactor.create_club_as_admin(name=name, tags=tags, adminId=user_id)
+        else:
+            id = interactor.create_club_as_sponsor(name, tags, adminId)(name=name, tags=tags, sponsorId=user_id)
         return redirect("/")
 
-    return redirect("/error")
+        
+
+    return render_template("error.html", data=create_error_data("Error creating club "))
 
 @app.route("/create-club")
 def create():
@@ -80,7 +92,6 @@ def clubPage(clubId):
     data = {}
     data["posts"] = interactor.posts_by_club_id(clubId)
     club = interactor.get_collection('club').read(clubId)
-    print("Club: ", club)
     if club == None:
         return render_template("error.html", data=create_error_data("Could not find club"))
     data["club"] = club
@@ -98,7 +109,7 @@ def clubPage(clubId):
             if club == clubId:
                 userInClub = True
     else:
-        return render_template("error.html", data=create_error_data("Invalid user type"))
+        userInClub = True
     data["userInClub"] = userInClub 
     return render_template("club.html", data=data)
 

@@ -2,7 +2,9 @@
 {% block title %}Clubs{% endblock %}
 {% block content %}
     <h1>Hello, {{ data.user.name }}</h1> 
-    <p>You attend {{ data.schoolName }}</p>
+    {% if data.type != "admin" %}
+        <p>You attend {{ data.schoolName }}</p>    
+    {% endif %}
     <h1>Clubs:</h1>
     {% for club in data.clubs %}
         <div>
@@ -12,6 +14,9 @@
     {% endfor %}
     {% if data.clubs|length == 0 %}
         <p>No clubs.</p>
+    {% endif %}
+    {% if data.type == "admin" %}
+        <a href="/admin">Admin panel</a>
     {% endif %}
     <p>New club? <a href="/create-club">Create one</a> </p>
 {% endblock %}
