@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}<!-- Insert post title OR club name here -->{% endblock %}
+{% block content %}
+    <style type="text/css">
+        .pfp {
+            height: 125px !important;
+            width: 140px !important;
+        }
+        .post {
+            background-color: #e7e7e7 !important;
+        }
+        .reply {
+            overflow: auto !important;
+            position: absolute !important;
+            padding:15px 25px;
+            width: 500px !important;
+            height: 170px !important;
+        }
+        .comments {
+            min-height: calc(100vh - 100px); /* Set a minimum height for the container */
+            max-height: 100%; /* Limit the height to the available space */
+            overflow-y: auto; /* Add vertical scroll if necessary */
+        }
+        .comment {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <div class="container m-5 vw-100">
+        <div class="container p-4 post">
+            <div class="row mb-2">
+                <div class="col-2">
+                    <img class="pfp" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+                </div>
+                <div class="col">
+                    <!-- Commentor name, time posted, and content -->
+                    <h1>Post Title</h1>
+                    <p class="mb-3">by <b>John Doe</b> - 1/1/2024 12:00 AM</p>
+                    <p> This is my first post.</p>
+                </div>
+            </div>
+        </div>
+        <div class="container bg-secondary p-4 mb-5">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="replyButton" data-bs-toggle="dropdown">
+                  Reply
+                </button>
+                <div class="dropdown-menu reply wv-100">
+                  <!-- Reply form or additional content goes here -->
+                  <form>
+                    <div class="form-group mb-2">
+                      <textarea class="form-control" rows="3" placeholder="Enter your reply"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Reply</button>
+                  </form>
+                </div>
+              </div>
+        </div>
+        <h2>Comments (0)</h2>
+        <div class="container comments">
+            <div class="list-group">
+                <!-- Iterate through comments in post -->
+                {% for i in range(50) %}
+                    <div class="container p-4 post comment">
+                        <div class="row mb-2">
+                            <div class="col-2">
+                                <img class="pfp" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+                            </div>
+                            <div class="col">
+                                <!-- Commentor name, time posted, and content -->
+                                <p class="mb-3">by <b>Jane Doe</b> - 1/1/2024 1:00 AM</p>
+                                <p>I fully agree.</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div> 
+        </div>
+    </div>
+{% endblock %}
