@@ -95,6 +95,7 @@ class DatabaseInteractor:
             "name": name,
             "email": email,
             "school": schoolId,
+            "clubs": [],
         })
 
         return id
@@ -111,6 +112,7 @@ class DatabaseInteractor:
             "name": name,
             "email": email,
             "school": schoolId,
+            "tags": [],
             "clubs": []
         })
 
@@ -125,7 +127,6 @@ class DatabaseInteractor:
             if club["name"] == name and club["school"] == student["school"]:
                 raise ValueError("Club with that name at that school already exists")
 
-        print("student: ", student)
         id = self.club_collection.create({
             "school": student["school"],
             "name": name,
@@ -138,7 +139,12 @@ class DatabaseInteractor:
         return id
 
     def create_post(self, content, clubId):
-        pass
+        id = self.post_collection.create({
+            "content": content,
+            "club": clubId
+        })
+
+        return id
     
     def add_student_to_club(self, studentId, clubId):
         prevStudent = self.student_collection.read(studentId)
@@ -175,3 +181,43 @@ class DatabaseInteractor:
                 postArr = append(postArr, post)
             
         return postArr
+    
+    def get_student_by_email(self, email):
+        students = self.student_collection.read_all()
+        for student in students:
+            if student["email"] == email:
+                return student 
+        
+        return None
+
+    def get_sponsor_by_email(self, email):
+        students = self.sponsor_collection.read_all()
+        for student in students:
+            if student["email"] == email:
+                return student 
+        
+        return None
+
+    def get_school_by_admin_email(self, email):
+        students = self.school_collection.read_all()
+        for student in students:
+            if student["adminEmail"] == email:
+                return student 
+        
+        return None
+
+    def get_school_by_name(self, name):
+        students = self.school_collection.read_all()
+        for student in students:
+            if student["name"] == email:
+                return student 
+        
+        return None
+
+    def get_school_by_email_ending(self, email_ending):
+        students = self.school_collection.read_all()
+        for student in students:
+            if student["emailSuffixes"] == email_ending:
+                return student 
+        
+        return None

@@ -2,6 +2,7 @@
 {% block title %}Clubs{% endblock %}
 {% block content %}
     <h1>Hello, {{ data.user.name }}</h1> 
+    <p>You attend {{ data.schoolName }}</p>
     <h1>Clubs:</h1>
     {% for club in data.clubs %}
         <div>
