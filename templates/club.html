@@ -1,13 +1,13 @@
 {% extends "base.html" %}
-{% block title %}{% data.club.name %}{% endblock %}
+{% block title %}{{ data.club.name }}{% endblock %}
 {% block content %}
-    <h1>Club name: {% data.club.name %}</h1>
-    <p>Club school: {% data.club.school %}</p> 
-    <p>Club description: {% data.club.description %}</p>
+    <h1>Club name: {{ data.club.name }}</h1>
+    <p>Club school: {{ data.club.school }}</p> 
+    <p>Club description: {{ data.club.description }}</p>
     
-    {% for post in data.posts() %}
+    {% for post in data.posts %}
         <div>
-            <p>{% post.content %}</p>
+            <p>{{ post.content }}</p>
         </div>
     {% endfor %}
     <a>Join</a>
