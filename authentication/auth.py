@@ -19,8 +19,7 @@ def login():
         email = request.form.get("email")
         student = interactor.get_student_by_email(email)
         sponsor = interactor.get_sponsor_by_email(email)
-        admin = interactor.get_admin_by_email(email)
-        print("Ele: ", student, sponsor, admin)
+        admin = interactor.get_school_by_admin_email(email)
 
         if student != None:
             resp = make_response(redirect("/"))
@@ -79,11 +78,14 @@ def signupSponsor():
     if request.method == "POST":
         name = request.form.get("name")
         email = request.form.get("email")
-        school = request.form.get("school")
-        if interactor.get_school_by_name(school) == None:
+        email_ending = "@" + email.split("@")[1]
+        school = interactor.get_school_by_email_ending(email_ending) # Remove need to specify school
+        # Pickup school from email suffix automatically
+        if school == None:
             return render_template("error.html", data=create_error_data("Unable to find school with that name"))
         tags = request.form.get("tags")
-        id = interactor.create_sponsor(schoolId=school, name=name, email=email)
+        # Tags feature not added yet
+        id = interactor.create_sponsor(schoolId=school["id"], name=name, email=email, tags=tags)
         resp = make_response(redirect("/"))
         cookie_val = "sponsor " + str(id)
         resp.set_cookie('userIDD', cookie_val)
@@ -100,10 +102,17 @@ def signupAdmin():
         email = request.form.get("email")
         school = request.form.get("school")
         domain = request.form.get("domain")
-        id = interactor.create_school(name=school, adminEmail=email, emailSuffixes=domain)
+        emailSuffixes = domain.split(",")
+        id = interactor.create_school(name=school, adminEmail=email, emailSuffixes=emailSuffixes)
         resp = make_response(redirect("/admin"))
         cookie_val = "admin " + str(id)
         resp.set_cookie('userIDD', cookie_val)
         return resp
 
     return render_template("signup_admin.html")
+
+@auth.route('/logout')
+def logout():
+    resp = make_response(redirect("/"))
+    resp.set_cookie('userIDD', "")
+    return resp

@@ -49,12 +49,12 @@ class Collection:
         
 class DatabaseInteractor:
     def __init__(self, db):
-        pass 
         self.school_collection = Collection(db, 'school') 
         self.student_collection = Collection(db, 'student') 
         self.club_collection = Collection(db, 'club') 
         self.post_collection = Collection(db, 'post') 
         self.sponsor_collection = Collection(db, 'sponsor')
+        self.comment_collection = Collection(db, 'comment')
 
     def get_collection(self, collection):
         mapper = {
@@ -66,6 +66,16 @@ class DatabaseInteractor:
         }
 
         return mapper.get(collection)
+
+    def create_comment(self, postId, authorId, content):
+        # Create school and return ID
+        id = self.comment_collection.create({
+            "post": postId,
+            "author": authorId,
+            "content": content,
+        })
+
+        return id
 
     def create_school(self, name, emailSuffixes, adminEmail):
         # Check that school does not already exist
@@ -102,7 +112,7 @@ class DatabaseInteractor:
 
     def create_sponsor(self, schoolId, name, email, tags):
         # Check that school does not already exist
-        students = self.sponsor_collection.read_all()
+        sponsors = self.sponsor_collection.read_all()
         for sponsor in sponsors:
             if sponsor["name"] == name:
                 raise ValueError("Sponsor with that name already exists")
@@ -218,7 +228,18 @@ class DatabaseInteractor:
     def get_school_by_email_ending(self, email_ending):
         students = self.school_collection.read_all()
         for student in students:
-            if student["emailSuffixes"] == email_ending:
-                return student 
+            emailSuffixes = student["emailSuffixes"]
+            for emailSuffix in emailSuffixes:
+                if emailSuffix == email_ending:
+                    return student 
         
         return None
+
+    def get_comments_by_post_id(self, postId):
+        commResult = []
+        comments = self.comment_collection.read_all()
+        for comment in comments:
+            if comment["post"] == postId:
+                commResult.append(comment)
+        
+        return commResult

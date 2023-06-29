@@ -141,11 +141,6 @@ def clubSponsor(clubId):
     # After they have logged in, it redirects them to this page again where they are put as the club sponsor
     pass
 
-@app.route('/logout')
-def logout():
-    resp = make_response(redirect("/"))
-    resp.set_cookie('userIDD', "")
-    return resp
 @app.route('/admin', methods=["GET"])
 def admin():
     return render_template('admin_panel.html')
