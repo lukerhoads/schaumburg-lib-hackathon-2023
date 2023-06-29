@@ -16,7 +16,7 @@ input[type=text], input[type=password] {
 
 /* navigation here*/
 .navbar {
-    background-color:rgb(55, 55, 249);
+    background-color:rgb(41, 41, 196);
     overflow: hidden;
 }
 .navbar a {

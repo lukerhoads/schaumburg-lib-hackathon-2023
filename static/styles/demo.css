@@ -1,6 +1,6 @@
 /* navigation here*/
 .navbar {
-    background-color:rgb(55, 55, 249);
+    background-color:rgb(43, 43, 199);
     overflow: hidden;
 }
 .navbar a {
@@ -19,7 +19,7 @@
 }
 
 .navbar a.active{
-    background-color:rgb(17, 17, 241);
+    background-color:rgb(216, 216, 216);
     color:white;
 }
 
@@ -29,6 +29,28 @@
 /* Main content */ 
 .mainCt {
     text-align:center;
+}
+
+.submenu {
+    z-index: 999;
+    overflow: visible;
+}
+
+.nav.navbar-nav.navbar-right li a {
+    color: rgb(255, 255, 255);
+}
+
+ul.dropdown-menu {
+    background-color: rgb(55, 55, 249);
+    color: rgb(255, 255, 255)
+}
+
+.nav-item.dropdown .dropdown-item:active {
+    background-color: green !important;
+}
+
+.nav-link {
+    color: rgb(214, 214, 214) !important;
 }
 
 /* login*/

@@ -6,22 +6,24 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/demo.css') }}"/>
     </head>
     <body>
-        <div class ="nav navbar">
+        <div class ="nav navbar navbar-expand-lg submenu">
             <li class="nav-item">
                 <a class ="nav-link active" href="/"> Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/one"> one thing</a>
+                <a class="nav-link" href="/"> About Us</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/one"> second thing</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    Account
+                </a>
+                <ul class="dropdown-menu submenu">
+                    <li><a class="dropdown-item" href="/auth/sign-up"> Sign Up</a></li>
+                    <li><a class="dropdown-item" href="/auth/login"> Login</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/auth/logout"> Log Out</a></li>
+                </ul>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/auth/sign-up"> Sign Up</a>
-            </li>
-            <div class="nav-item">
-                <a class="nav-link" href="/auth/login"> Login</a>
-            </div>a
         
         </div>
         {% block content %}{% endblock %}

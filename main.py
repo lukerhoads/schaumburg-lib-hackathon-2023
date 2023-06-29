@@ -35,6 +35,9 @@ def clubPage(clubId):
     data["userInClub"] = False
     return render_template("club.html", data=data)
 
+@app.route('/admin/', methods=["GET", "POST"])
+def admin():
+    return render_template('admin_panel.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
