@@ -17,19 +17,6 @@
     {% if data.userInClub == False %}
         <a href="{{ data.club.id }}/join">Join</a>
     {% else %}
-        <h2>Create club post</h2>
-        <form action="{{ data.club.id }}/post" method="post">
-            <div class="form-group mb-3">
-                <label for="content">Content</label>
-                <input type="text" class="form-control" placeholder="Post content" name="content" id="content" required>
-            </div>
-            <div class="form-group mb-3">
-                <label for="content">Title</label>
-                <input type="text" class="form-control" placeholder="Post title" name="title" id="title" required>
-            </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-lg">Register</button>
-            </div>
-        </form>
+        <a href="{{ data.club.id }}/post">Create post</a>
     {% endif %}
 {% endblock %}
