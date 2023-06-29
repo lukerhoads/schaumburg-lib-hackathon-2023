@@ -14,19 +14,18 @@ def index():
     # Get logged in user
     user_id, user_type = get_user()
     if user_id:
-        match user_type:
-            case "student":
-                user = interactor.get_collection('student').read(user_id)
-                data = {}
-                data["user"] = user
-                data["clubs"] = interactor.clubs_by_school_id(user["school"])
-                print(data["clubs"])
-                return render_template("index.html", data=data)
-            case "sponsor":
-                pass
-            case "admin":
-                pass
-                # admin panel url: /admin
+        if user_type == "student":
+            user = interactor.get_collection('student').read(user_id)
+            data = {}
+            data["user"] = user
+            data["clubs"] = interactor.clubs_by_school_id(user["school"])
+            print(data["clubs"])
+            return render_template("index.html", data=data)
+        elif user_type == "sponsor":
+            pass
+        elif user_type == "admin":
+            pass
+            # admin panel url: /admin
 
     # If no user, redirect to login
     return redirect("/auth/login")
