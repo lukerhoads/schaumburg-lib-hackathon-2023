@@ -30,7 +30,8 @@ class Collection:
         self.collection = db.collection(collection)
 
     def create(self, object):
-        id = len(self.read(None))
+        id = len(self.read_all())
+        object["id"] = id
         self.collection.document(str(id)).set(object)
         return id
     
@@ -59,7 +60,7 @@ class DatabaseInteractor:
         mapper = {
             'school': self.school_collection,
             'student': self.student_collection,
-            'clubs': self.club_collection,
+            'club': self.club_collection,
             'post': self.post_collection,
             'sponsor': self.sponsor_collection,
         }
@@ -94,7 +95,6 @@ class DatabaseInteractor:
             "name": name,
             "email": email,
             "school": schoolId,
-            "clubs": []
         })
 
         return id
@@ -159,8 +159,13 @@ class DatabaseInteractor:
         })
 
     def clubs_by_school_id(self, schoolId):
-        clubs = self.club_collection.read(None)
-        return [club for club in clubs if club.school == schoolId]
+        clubs = self.club_collection.read_all()
+        clubResult = []
+        for club in clubs:
+            if club["school"] == schoolId:
+                clubResult.append(club)
+            
+        return clubResult
 
     def posts_by_club_id(self, clubId):
         posts = self.post_collection.read_all()

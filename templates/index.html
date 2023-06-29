@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Clubs{% endblock %}
 {% block content %}
-    <h1>Hello, {% data.user.name %}</h1> 
+    <h1>Hello, {{ data.user.name }}</h1> 
     <h1>Clubs:</h1>
-    {% for club in data.clubs() %}
+    {% for club in data.clubs %}
         <div>
-            <div>Club name: {% club.name %}</div>
-            <a href="">Link</a>
+            <div>Club name: {{ club.name }}</div>
+            <a href="{{ club.id }}">Link</a>
         </div>
     {% endfor %}
+    {% if data.clubs|length == 0 %}
+        <p>No clubs.</p>
+    {% endif %}
+    <p>New club? <a href="/create">Create one</a> </p>
 {% endblock %}
