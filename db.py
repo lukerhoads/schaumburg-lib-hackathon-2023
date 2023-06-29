@@ -138,9 +138,10 @@ class DatabaseInteractor:
 
         return id
 
-    def create_post(self, content, clubId):
+    def create_post(self, content, clubId, title):
         id = self.post_collection.create({
             "content": content,
+            "title": title,
             "club": clubId
         })
 
@@ -161,7 +162,7 @@ class DatabaseInteractor:
 
     def add_sponsor_to_club(self, clubId, sponsorId):
         self.club_collection.update(clubId, {
-            "sponsor": sponsorId,
+            "administrator": sponsorId,
         })
 
     def clubs_by_school_id(self, schoolId):
@@ -178,7 +179,7 @@ class DatabaseInteractor:
         postArr = []
         for post in posts:
             if post["club"] == clubId:
-                postArr = append(postArr, post)
+                postArr.append(post)
             
         return postArr
     

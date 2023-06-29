@@ -4,13 +4,32 @@
     <h1>Club name: {{ data.club.name }}</h1>
     <p>Club school: {{ data.clubSchoolName }}</p> 
     
+    {% if data.posts|length > 0 %}
+        <h2>Posts:</h2>
+    {% endif %}
     {% for post in data.posts %}
         <div>
+            <h3>{{ post.title }}</h3>
             <p>{{ post.content }}</p>
         </div>
     {% endfor %}
 
     {% if data.userInClub == False %}
-        <a>Join</a>
+        <a href="{{ data.club.id }}/join">Join</a>
+    {% else %}
+        <h2>Create club post</h2>
+        <form action="{{ data.club.id }}/post" method="post">
+            <div class="form-group mb-3">
+                <label for="content">Content</label>
+                <input type="text" class="form-control" placeholder="Post content" name="content" id="content" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="content">Title</label>
+                <input type="text" class="form-control" placeholder="Post title" name="title" id="title" required>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg">Register</button>
+            </div>
+        </form>
     {% endif %}
 {% endblock %}

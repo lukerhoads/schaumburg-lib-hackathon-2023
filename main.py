@@ -103,23 +103,31 @@ def clubPage(clubId):
     data["userInClub"] = userInClub 
     return render_template("club.html", data=data)
 
-@app.route('/<clubId>/join', methods=["POST"])
+@app.route('/<clubId>/join', methods=["GET"])
 def clubJoin(clubId):
     user_id, user_type = get_user()
     if user_id == None:
         return redirect("/auth/login")
     
     if user_type == "student":
-        interactor.add_student_to_club(studentId, clubId)
+        interactor.add_student_to_club(user_id, clubId)
+        return redirect("/" + clubId)
     elif user_type == "sponsor":
+        club = interactor.get_collection('club').read(clubId)
+        if club["administrator"] != None:
+            return render_template("error.html", data=create_error_data("Club already has an administrator"))
         interactor.add_sponsor_to_club(clubId, sponsorId)
+        return redirect("/" + clubId)
 
-    return redirect("/error", data=create_error_data("Invalid user type"))
+    return render_template("error.html", data=create_error_data("Invalid user type"))
 
 @app.route('/<clubId>/post', methods=["POST"])
 def clubPost(clubId):
     content = request.form.get("content")
-    interactor.create_post(content, clubId)
+    title = request.form.get("title")
+    if content == None or content == "" or title == None or title == "":
+        return render_template("error.html", data=create_error_data("Empty post content or title"))
+    interactor.create_post(content, clubId, title)
     return redirect("/" + clubId)
 
 @app.route('/<clubId>/sponsor', methods=["GET"])
