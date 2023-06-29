@@ -14,35 +14,34 @@ def index():
     # Get logged in user
     user_id, user_type = get_user()
     if user_id != None:
-        match user_type:
-            case "student":
-                user = interactor.get_collection('student').read(user_id)
-                if user == None:
-                    return render_template("error.html", create_error_data("Could not find user by id"))
-                data = {}
-                data["type"] = "student"
-                print("School: ", user["school"])
-                school = interactor.get_collection("school").read(user["school"])
-                data["schoolName"] = school["name"]
-                data["user"] = user
-                data["clubs"] = interactor.clubs_by_school_id(user["school"])
-                return render_template("index.html", data=data)
-            case "sponsor":
-                user = interactor.get_collection('sponsor').read(user_id)
-                if user == None:
-                    return render_template("error.html", create_error_data("Could not find user by id"))
-                data = {}
-                data["type"] = "sponsor"
-                data["user"] = user
-                clubs = []
-                for club in user["clubs"]:
-                    dbClub = interactor.get_collection("club").read(club)
-                    clubs.append(dbClub)
-                data["clubs"] = clubs
-                return render_template("index.html", data=data)
-            case "admin":
-                return redirect("/admin")
-                # admin panel url: /admin
+        if user_type == "student":
+            user = interactor.get_collection('student').read(user_id)
+            if user == None:
+                return render_template("error.html", create_error_data("Could not find user by id"))
+            data = {}
+            data["type"] = "student"
+            print("School: ", user["school"])
+            school = interactor.get_collection("school").read(user["school"])
+            data["schoolName"] = school["name"]
+            data["user"] = user
+            data["clubs"] = interactor.clubs_by_school_id(user["school"])
+            return render_template("index.html", data=data)
+        elif user_type == "sponsor":
+            user = interactor.get_collection('sponsor').read(user_id)
+            if user == None:
+                return render_template("error.html", create_error_data("Could not find user by id"))
+            data = {}
+            data["type"] = "sponsor"
+            data["user"] = user
+            clubs = []
+            for club in user["clubs"]:
+                dbClub = interactor.get_collection("club").read(club)
+                clubs.append(dbClub)
+            data["clubs"] = clubs
+            return render_template("index.html", data=data)
+        elif user_type == "admin":
+            return redirect("/admin")
+            # admin panel url: /admin
 
     # If no user, redirect to login
     return redirect("/auth/login")
@@ -144,6 +143,10 @@ def logout():
 @app.route('/admin', methods=["GET"])
 def admin():
     return render_template('admin_panel.html')
+
+@app.route('/post')
+def examplePost():
+    return render_template('post.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
