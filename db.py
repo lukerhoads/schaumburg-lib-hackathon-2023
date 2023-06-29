@@ -46,6 +46,8 @@ class Collection:
         item = self.collection.document(str(id)).get()
         return item.to_dict()
         
+    def delete(self, id):
+        self.collection.document(id).delete()
         
 class DatabaseInteractor:
     def __init__(self, db):
@@ -128,7 +130,7 @@ class DatabaseInteractor:
 
         return id
 
-    def create_club(self, name, tags, studentId):
+    def create_club(self, name, tags, studentId, description):
         student = self.student_collection.read(studentId)
 
         # Check that school does not already exist
@@ -143,12 +145,13 @@ class DatabaseInteractor:
             "tags": tags,
             "posts": [],
             "administrator": None,
-            "students": [studentId]
+            "students": [studentId],
+            "description": description,
         })
 
         return id
 
-    def create_club_as_sponsor(self, name, tags, sponsorId):
+    def create_club_as_sponsor(self, name, tags, sponsorId, description):
         student = self.student_collection.read(sponsorId)
 
         # Check that school does not already exist
@@ -163,12 +166,13 @@ class DatabaseInteractor:
             "tags": tags,
             "posts": [],
             "administrator": student,
-            "students": []
+            "students": [],
+            "description": description,
         })
 
         return id
 
-    def create_club_as_admin(self, name, tags, adminId):
+    def create_club_as_admin(self, name, tags, adminId, description):
         school = self.school_collection.read(adminId)
 
         # Check that school does not already exist
@@ -183,7 +187,8 @@ class DatabaseInteractor:
             "tags": tags,
             "posts": [],
             "administrator": None,
-            "students": []
+            "students": [],
+            "description": description,
         })
 
         return id
