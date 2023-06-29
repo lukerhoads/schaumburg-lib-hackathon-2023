@@ -17,21 +17,20 @@
         <p>Hosting 0 Clubs<button class="btn btn-primary mx-3 xy-3" type="submit">Add Club</button></p>
         <div class="card bg-light clublist pt-3 pb-5 vh-100" style="border-radius: 15px">
             <div class="list-group">
-                <!--For club in data.clubs-->
-                {% for i in range(3) %}
+                {% for club in data.clubs %}
                     <div class="container bg-white mb-3 align-items-center px-4 py-2" style="border-radius: 15px">
                         <div class="row">
                             <div class="col">
-                                <p class="h5"><b>Club Name</b></p>
+                                <p class="h5"><b>{{ club.name }}</b></p>
                             </div>
                             <div class="col">
-                                <p>0 Posts</p>
+                                <p>{{ club.posts|length }} posts</p>
                             </div>
                             <div class="col">
-                                <p>0 Members</p>
+                                <p>{{ club.students|length }} students</p>
                             </div>
                             <div class="col">
-                                <a class="btn btn-primary float-end" href="#">Manage Club</a>
+                                <a class="btn btn-primary float-end" href="/admin/{{ club.id }}">Manage Club</a>
                             </div>
                         </div>
                     </div>

@@ -153,7 +153,55 @@ def clubSponsor(clubId):
 
 @app.route('/admin', methods=["GET"])
 def admin():
-    return render_template('admin_panel.html')
+    user_id, user_type = get_user()
+    if user_id == None:
+        return redirect("/auth/login")
+
+    if user_type != "admin":
+        return render_template("error.html", data=create_error_data("Unauthorized"))
+
+    data = {}
+    clubs = interactor.clubs_by_school_id(user_id)
+    data["clubs"] = clubs
+    return render_template('admin_panel.html', data=data)
+
+@app.route('/admin/<clubId>', methods=["GET", "POST"])
+def adminEditClub(clubId):
+    user_id, user_type = get_user()
+    if user_id == None:
+        return redirect("/auth/login")
+
+    if user_type != "admin":
+        return render_template("error.html", data=create_error_data("Unauthorized"))
+    
+    currentClub = interactor.get_collection('club').read(clubId)
+    if request.method == "POST":
+        if currentClub == None:
+            return render_template("error.html", data=create_error_data("COuld not find current club"))
+
+        if user_id != None:
+            name = request.form.get("name")
+            tags = request.form.get("tags")
+            interactor.get_collection('club').update(id=currentClub["id"], object={
+                "school": currentClub["school"],
+                "id": currentClub["id"],
+                "name": name,
+                "tags": tags,
+                "posts": currentClub["posts"],
+                "administrator": currentClub["administrator"],
+                "students": currentClub["students"]
+            })
+            return redirect("/admin")
+
+    data = {}
+    data["clubId"] = clubId
+    data["name"] = currentClub["name"]
+    tags = currentClub["tags"]
+    if len(tags) > 0:
+        data["tags"] = currentClub["tags"]
+    else:
+        data["tags"] = ""
+    return render_template("edit-club.html", data=data)
 
 @app.route('/post')
 def examplePost():

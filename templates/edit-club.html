@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Create club{% endblock %}
+{% block content %}
+    <p>Manage club</p>
+    <form action="/admin/{{ data.clubId }}" method="post">
+        <div class="form-group mb-3">
+            <label for="name">Name</label>
+            <input value="{{ data.name }}" type="text" class="form-control" placeholder="Enter Name" name="name" id="name" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="tags">Tags</label>
+            <input value="{{ data.tags }}" type="text" class="form-control" placeholder="Enter tags separated by comma" name="tags" id="tags" required>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg">Edit club</button>
+        </div>
+    </form>
+{% endblock %}
