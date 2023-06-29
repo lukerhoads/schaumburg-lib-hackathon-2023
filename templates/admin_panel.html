@@ -14,7 +14,7 @@
 
     <div class="container vw-100">
         <h1>Welcome, Admin!</h1>
-        <p>Hosting 0 Clubs<button class="btn btn-primary mx-3 xy-3" type="submit">Add Club</button></p>
+        <p>Hosting {{ data.clubs|length }} Clubs<a class="btn btn-primary mx-3 xy-3" href="/create-club">Add Club</a></p>
         <div class="card bg-light clublist pt-3 pb-5 vh-100" style="border-radius: 15px">
             <div class="list-group">
                 {% for club in data.clubs %}

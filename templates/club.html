@@ -3,7 +3,8 @@
 {% block content %}
     <h1>Club name: {{ data.club.name }}</h1>
     <p>Club school: {{ data.clubSchoolName }}</p> 
-    
+    <p>Club description: {{ data.club.description }}</p> 
+
     {% if data.posts|length > 0 %}
         <h2>Posts:</h2>
     {% endif %}
