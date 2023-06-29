@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Admin Panel{% endblock %}
+{% block content %}
+    <h1>Welcome, Admin!</h1>
+    <button class="btn btn-primary" type="submit">Add Club</button>
+    <p>Hosting 0 Clubs</p>
+    <div class="row">
+        <div class="card bg-primary px-10" style="border-radius: 15px">
+            <div class="list-group">
+                <div class="container bg-light">
+                    <p>Club Name<button class="btn btn-primary">Manage Club</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

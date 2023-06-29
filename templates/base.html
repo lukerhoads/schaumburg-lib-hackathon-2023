@@ -6,11 +6,12 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/demo.css') }}"/>
     </head>
     <body>
-        <div class ="nav navbar">
+        <div class ="nav navbar navbar-expand-lg submenu">
             <li class="nav-item">
                 <a class ="nav-link active" href="/"> Home</a>
             </li>
             <li class="nav-item">
+<<<<<<< HEAD
                 <a class="nav-link" href="/auth/sign-up"> Sign Up</a>
             </li>
             <div class="nav-item">
@@ -19,6 +20,22 @@
             <div class="nav-item">
                 <a class="nav-link" href="/logout"> Logout</a>
             </div>
+=======
+                <a class="nav-link" href="/"> About Us</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    Account
+                </a>
+                <ul class="dropdown-menu submenu">
+                    <li><a class="dropdown-item" href="/auth/sign-up"> Sign Up</a></li>
+                    <li><a class="dropdown-item" href="/auth/login"> Login</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/auth/logout"> Log Out</a></li>
+                </ul>
+            </li>
+        
+>>>>>>> origin/main
         </div>
         {% block content %}{% endblock %}
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
