@@ -6,3 +6,8 @@ def get_user():
         split = userId.split(" ")
         return int(split[1]), split[0]
     return None, ""
+
+def create_error_data(msg):
+    data = {}
+    data["message"] = msg 
+    return data
