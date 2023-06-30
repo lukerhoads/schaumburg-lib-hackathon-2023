@@ -231,6 +231,7 @@ def adminEditClub(clubId):
         data["tags"] = ""
     return render_template("edit-club.html", data=data)
 
+# hello
 @app.route('/admin/<clubId>/delete', methods=["GET"])
 def deleteClub(clubId):
     user_id, user_type = get_user()
