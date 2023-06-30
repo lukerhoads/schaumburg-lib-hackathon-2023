@@ -92,7 +92,14 @@ def clubPage(clubId):
 
     # Get club ID from database
     data = {}
-    data["posts"] = interactor.posts_by_club_id(clubId)
+    postsDb = interactor.posts_by_club_id(clubId)
+    newPosts = []
+    for post in postsDb:
+        newPost = post 
+        comments = interactor.get_comments_by_post_id(post["id"])
+        newPost["comments"] = len(comments)
+        newPosts.append(newPost)
+    data["posts"] = newPosts
     club = interactor.get_collection('club').read(clubId)
     if club == None:
         return render_template("error.html", data=create_error_data("Could not find club"))
@@ -158,7 +165,6 @@ def clubPost(clubId):
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
         id = interactor.create_post(content, clubId, title, authorName=authorName, date=date_time)
         prevClub = interactor.get_collection('club').read(clubId)
-        print("Prev club posts")
         if prevClub == None:
             return render_template("error.html", data=create_error_data("Could not find club"))
         interactor.get_collection('club').update(clubId, {
@@ -255,7 +261,6 @@ def post(clubId, postId):
         return redirect("/auth/login")
 
     if request.method == "POST":
-        print("Processing comment")
         authorName = ""
         if user_type == "student":
             student = interactor.get_collection("student").read(user_id)

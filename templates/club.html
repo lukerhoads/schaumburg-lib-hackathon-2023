@@ -41,11 +41,11 @@
                         <div class="container bg-white border mb-1 ml-4 mr-4">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h3 class="text-truncate"><a class="link-dark link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ post.id }}">{{ post.title }}</a></h3>
-                                    <p>Posted by <!--USERNAME OF POSTER--></p>
+                                    <h3 class="text-truncate"><a class="link-dark link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ data.club.id }}/{{ post.id }}">{{ post.title }}</a></h3>
+                                    <p>Posted by {{ post.author }}</p>
                                 </div>
                                 <div class="col">
-                                    <p>0 Comments</p>
+                                    <p>{{ post.comments }} Comments</p>
                                 </div>
                             </div>
                         </div>

@@ -288,7 +288,7 @@ class DatabaseInteractor:
         commResult = []
         comments = self.comment_collection.read_all()
         for comment in comments:
-            if comment["post"] == postId:
+            if int(comment["post"]) == int(postId):
                 commResult.append(comment)
         
         return commResult
