@@ -4,12 +4,47 @@
     <style type="text/css">
         .splash {
             height: 500px;
-            background: linear-gradient(to right, #813ddad5, #5d31e2d7, #4c4fe9d8, #2965d4d3)
+            background: linear-gradient(to right, #813ddad5, #5d31e2d7, #4c4fe9d8, #2965d4d3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .divide {
+            height: 10px;
+            background-color: rgb(75, 0, 161);
+        }
+        .learnmore {
+            background: linear-gradient(to right, #6909e6, #4c18e8, #3235f2, #0e57df);;
+        }
+        .fade {
+            height: 500px;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999; 
+        }
+        .divide-text {
+            margin-top: 150px;
+            margin-bottom: 300px;
         }
     </style>
-    <div class="container splash vw-100">
-        <h1>About Us</h1>
-        
+    <div class="container-fluid splash">
+        <div class="container text-center">
+            <h1 class="m-0 text-white mb-2">Build your community</h1>
+            <p class="m-0 text-white">ClubMaster helps students get involved, whether it be clubs, events, sports, anything.</p>
+            <a href="#learn-more"><button type="button" class="btn btn-primary btn-lg mt-2 learnmore">Learn More</button></a>
+        </div>
     </div>
+    <div class="container-fluid divide"></div>
+    <div class="container divide-text">
+        <h1>Who we are</h1>
+        <p class="mb-3">At ClubMaster, we are passionate about creating a dynamic and engaging club experience for students, schools, and sponsors. As a comprehensive platform, we bring together a diverse community of individuals who share a common goal: to unlock the full potential of clubs as a powerful avenue for personal growth, skill development, and meaningful connections.</p>
 
+        <p class="mb-3">For students, ClubMaster serves as a gateway to a world of exciting club opportunities. Our platform allows administrators to host a wide range of clubs spanning various interests, from sports and arts to academics and hobbies. By joining these clubs, students can delve into their passions, connect with like-minded peers, and embark on a journey of self-discovery. Through club activities, collaborative projects, and club events, students gain invaluable experiences that enhance their personal, social, and academic development.</p>
+
+        <p class="mb-3">We understand that teachers play a pivotal role in shaping the club landscape. That's why ClubMaster provides a comprehensive set of tools and resources designed to support teachers in managing and mentoring clubs effectively. From simplified administrative tasks to seamless communication channels, our platform empowers teachers to create a nurturing and inspiring environment where students can thrive. By harnessing their expertise and passion, teachers can guide students' club journeys, fostering leadership skills, teamwork, and a lifelong love for learning. </p>
+
+        <p class="mb-3" id="learn-more">Moreover, ClubMaster values the vital role of sponsors in clubs. Sponsors, who may be teachers, staff members, or community professionals, serve as mentors and guides, nurturing students' talents, and providing valuable insights and guidance. By connecting sponsors with clubs, ClubMaster fosters meaningful relationships that inspire students to reach their full potential.</p>
+
+        <p class="mb-3">Together, as a vibrant community within ClubMaster, students, teachers, and sponsors have the opportunity to shape the future of club culture. We invite you to join us on this transformative journey, where every individual is encouraged to embrace their passions, expand their horizons, and discover the boundless possibilities that clubs have to offer. Together, let's unlock the power of clubs and create a vibrant, inclusive, and thriving community that celebrates growth, learning, and connection. Ready to join? Click the button below to register.</p>
+        <a href="/auth/sign-up"><button type="button" class="btn learnmore btn-lg text-white mx-auto">Join Us</button></a>
+    </div>
 {% endblock %}

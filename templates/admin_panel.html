@@ -16,8 +16,9 @@
         <h1>Welcome, Admin!</h1>
         <p>Hosting {{ data.clubs|length }} Clubs<a class="btn btn-primary mx-3 xy-3" href="/create-club">Add Club</a></p>
         <div class="card bg-light clublist pt-3 pb-5 vh-100" style="border-radius: 15px">
-            <div class="list-group">
-                {% for club in data.clubs %}
+            {% if data.clubs|length > 0 %}
+                <div class="list-group">
+                    {% for club in data.clubs %}
                     <div class="container bg-white mb-3 align-items-center px-4 py-2" style="border-radius: 15px">
                         <div class="row">
                             <div class="col">
@@ -35,7 +36,10 @@
                         </div>
                     </div>
                 {% endfor %}
-            </div>
+                </div>
+            {% else %}
+                <h2 class="text-center text-dark">No clubs. Create one!</h2>
+            {% endif %}
         </div>
     </div>
 
