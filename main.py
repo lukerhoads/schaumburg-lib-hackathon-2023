@@ -20,7 +20,7 @@ def index():
             if user == None:
                 return render_template("error.html", create_error_data("Could not find user by id"))
             data = {}
-            data["type"] = "student"
+            data["userType"] = "student"
             print("School: ", user["school"])
             school = interactor.get_collection("school").read(user["school"])
             data["schoolName"] = school["name"]
@@ -32,7 +32,7 @@ def index():
             if user == None:
                 return render_template("error.html", create_error_data("Could not find user by id"))
             data = {}
-            data["type"] = "sponsor"
+            data["userType"] = "sponsor"
             data["user"] = user
             clubs = []
             for club in user["clubs"]:
@@ -45,7 +45,7 @@ def index():
             user = interactor.get_collection('school').read(user_id)
             data["user"] = user
             data["clubs"] = interactor.clubs_by_school_id(user["id"])
-            data["type"] = "admin"
+            data["userType"] = "admin"
             return render_template("index.html", data=data)
             # admin panel url: /admin
 
@@ -90,6 +90,7 @@ def clubPage(clubId):
 
     # Get club ID from database
     data = {}
+    data["userType"] = user_type
     postsDb = interactor.posts_by_club_id(clubId)
     newPosts = []
     for post in postsDb:
@@ -171,6 +172,7 @@ def clubPost(clubId):
         return redirect("/" + clubId)
 
     data = {}
+    data["userType"] = user_type
     data["clubId"] = clubId
     return render_template("create-post.html", data=data)
 
@@ -192,6 +194,7 @@ def admin():
     data = {}
     clubs = interactor.clubs_by_school_id(user_id)
     data["clubs"] = clubs
+    data["userType"] = user_type
     return render_template('admin_panel.html', data=data)
 
 @app.route('/admin/<clubId>', methods=["GET", "POST"])
@@ -225,6 +228,7 @@ def adminEditClub(clubId):
             return redirect("/admin")
 
     data = {}
+    data["userType"] = user_type
     data["clubId"] = clubId
     data["name"] = currentClub["name"]
     data["description"] = currentClub["description"]
@@ -282,6 +286,7 @@ def post(clubId, postId):
     if post == None:
         return render_template("error.html", data=create_error_data("Could not find post"))
 
+    data["userType"] = user_type
     data["clubId"] = clubId 
     data["postId"] = postId
     data["comments"] = comments
