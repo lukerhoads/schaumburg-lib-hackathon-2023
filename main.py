@@ -75,9 +75,7 @@ def club():
         else:
             id = interactor.create_club_as_sponsor(name, tags, adminId)(name=name, tags=tags, sponsorId=user_id, description=description)
         return redirect("/")
-
-        
-
+    
     return render_template("error.html", data=create_error_data("Error creating club "))
 
 @app.route("/create-club")
@@ -289,6 +287,10 @@ def post(clubId, postId):
     data["comments"] = comments
     data["post"] = post
     return render_template('post.html', data=data)
+
+@app.route('/aboutUs')
+def aboutUs():
+    return render_template('aboutus.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
