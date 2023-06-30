@@ -69,12 +69,13 @@ class DatabaseInteractor:
 
         return mapper.get(collection)
 
-    def create_comment(self, postId, authorId, content):
+    def create_comment(self, postId, authorName, content, timestamp):
         # Create school and return ID
         id = self.comment_collection.create({
             "post": postId,
-            "author": authorId,
+            "author": authorName,
             "content": content,
+            "timestamp": timestamp,
         })
 
         return id
@@ -112,6 +113,7 @@ class DatabaseInteractor:
 
         return id
 
+
     def create_sponsor(self, schoolId, name, email, tags):
         # Check that school does not already exist
         sponsors = self.sponsor_collection.read_all()
@@ -143,7 +145,7 @@ class DatabaseInteractor:
             "school": student["school"],
             "name": name,
             "tags": tags,
-            "posts": [],
+            "posts": 0,
             "administrator": None,
             "students": [studentId],
             "description": description,
@@ -164,7 +166,7 @@ class DatabaseInteractor:
             "school": student["school"],
             "name": name,
             "tags": tags,
-            "posts": [],
+            "posts": 0,
             "administrator": student,
             "students": [],
             "description": description,
@@ -185,7 +187,7 @@ class DatabaseInteractor:
             "school": school["id"],
             "name": name,
             "tags": tags,
-            "posts": [],
+            "posts": 0,
             "administrator": None,
             "students": [],
             "description": description,
@@ -193,15 +195,17 @@ class DatabaseInteractor:
 
         return id
 
-    def create_post(self, content, clubId, title):
+    def create_post(self, content, clubId, title, authorName, date):
         id = self.post_collection.create({
             "content": content,
             "title": title,
-            "club": clubId
+            "club": clubId,
+            "author": authorName,
+            "timestamp": date,
         })
 
         return id
-    
+
     def add_student_to_club(self, studentId, clubId):
         prevStudent = self.student_collection.read(studentId)
         prevStudent["clubs"].append(clubId)
