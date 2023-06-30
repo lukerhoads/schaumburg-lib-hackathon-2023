@@ -40,13 +40,13 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h3><a class="link-dark link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ club.id }}">{{ club.name }}</a></h3>
-                                    <p>Club description</p>
+                                    <p>{{ club.description }}</p>
                                 </div>
                                 <div class="col">
-                                    <p>0 Posts</p>
+                                    <p>{{ club.posts }} Posts</p>
                                 </div>
                                 <div class="col">
-                                    <p>0 Members</p>
+                                    <p>{{ club.students|length }} Members</p>
                                 </div>
                             </div>
                         </div>
