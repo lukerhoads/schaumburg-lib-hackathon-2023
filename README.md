@@ -1,3 +1,6 @@
+## Demo Video
+See our project in action [here.](https://www.youtube.com/watch?v=bGyHvDYfs8Y)
+
 ## Inspiration
 Our group agreed that taking part in clubs can sometimes be a bureaucratic process that puts a burden on  interested students. We thought that a web app that schools can use to list their clubs would be a good way for students to find their voice through increased participation in their school club community.
 
