@@ -1,15 +1,4 @@
 {% extends "base.html" %}
-{% block homelink %}
-{% if data.userType == "student" or data.userType == "sponsor" %} 
-    <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
-    </li>
-{% elif data.userType == "admin" %} 
-    <li class="nav-item">
-        <a class="nav-link" href="/admin">Admin Panel</a>
-    </li>
-{% endif %}
-{% endblock %}
 {% block title %}Create club{% endblock %}
 {% block content %}
     <div class="container">
