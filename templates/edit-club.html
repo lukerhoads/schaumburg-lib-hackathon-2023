@@ -1,23 +1,34 @@
 {% extends "base.html" %}
 {% block title %}Create club{% endblock %}
 {% block content %}
-    <p>Manage club</p>
-    <form action="/admin/{{ data.clubId }}" method="post">
-        <div class="form-group mb-3">
-            <label for="name">Name</label>
-            <input value="{{ data.name }}" type="text" class="form-control" placeholder="Enter Name" name="name" id="name" required>
-        </div>
-        <div class="form-group mb-3">
-            <label for="tags">Description</label>
-            <input value="{{ data.description }}" type="text" class="form-control" placeholder="Enter description" name="description" id="description" required>
-        </div>
-        <div class="form-group mb-3">
-            <label for="tags">Tags</label>
-            <input value="{{ data.tags }}" type="text" class="form-control" placeholder="Enter tags separated by comma" name="tags" id="tags" required>
-        </div>
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary btn-lg">Edit club</button>
-        </div>
-        <a href="/admin/{{ data.clubId }}/delete">Delete club</a>
-    </form>
+    <div class="container">
+        <h1>Manage club</h1>
+        <form action="/admin/{{ data.clubId }}" method="post">
+            <div class="form-group mb-3">
+                <label for="name">Name</label>
+                <input value="{{ data.name }}" type="text" class="form-control" placeholder="Enter Name" name="name" id="name" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="tags">Description</label>
+                <textarea value="{{ data.description }}" rows="5" class="form-control" placeholder="Enter description" name="description" id="description" required></textarea>
+            </div>
+            <div class="form-group mb-3">
+                <label for="tags">Tags</label>
+                <input value="{{ data.tags }}" type="text" class="form-control" placeholder="Enter tags separated by comma" name="tags" id="tags" required>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg float-end">Edit Club</button>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="text-center">
+                        <a href="/admin/{{ data.clubId }}/delete"></a><button type="submit" class="btn btn-danger btn-lg float-start">Delete Club</button></a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
 {% endblock %}
