@@ -1,4 +1,15 @@
 {% extends "base.html" %}
+{% block homelink %}
+{% if data.userType == "student" or data.userType == "sponsor" %} 
+    <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+    </li>
+{% elif data.userType == "admin" %} 
+    <li class="nav-item">
+        <a class="nav-link" href="/admin">Admin Panel</a>
+    </li>
+{% endif %}
+{% endblock %}
 {% block title %}Clubs{% endblock %}
 {% block content %}
     <style type="text/css">
@@ -13,7 +24,7 @@
     </style>
     <div class="container p-4">
         <h1>Hello, {{ data.user.name }}!</h1> 
-        {% if data.type != "admin" %}
+        {% if data.userType != "admin" %}
             <p>You attend {{ data.schoolName }}</p>    
         {% else %}
             <a href="/admin"><button type="button" class="btn btn-success">Admin Panel</button></a>
