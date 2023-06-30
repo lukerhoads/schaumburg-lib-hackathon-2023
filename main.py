@@ -3,6 +3,7 @@ from authentication.auth import auth
 from firebase_admin import credentials, firestore, initialize_app
 from db import Collection, DatabaseInteractor, get_interactor
 from utils import get_user, create_error_data
+from datetime import datetime 
 
 app = Flask(__name__)
 app.register_blueprint(auth, url_prefix="/auth")
@@ -134,12 +135,35 @@ def clubJoin(clubId):
 
 @app.route('/<clubId>/post', methods=["GET", "POST"])
 def clubPost(clubId):
+    user_id, user_type = get_user()
+    if user_id == None:
+        return redirect("/auth/login")
+
     if request.method == "POST":
+        authorName = ""
+        if user_type == "student":
+            student = interactor.get_collection("student").read(user_id)
+            authorName = student["name"]
+        elif user_type == "sponsor":
+            sponsor = interactor.get_collection("sponsor").read(user_id)
+            authorName = sponsor["name"]
+        else:
+            school = interactor.get_collection("school").read(user_id)
+            authorName = school["name"]
         content = request.form.get("content")
         title = request.form.get("title")
         if content == None or content == "" or title == None or title == "":
             return render_template("error.html", data=create_error_data("Empty post content or title"))
-        interactor.create_post(content, clubId, title)
+        now = datetime.now()
+        date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+        id = interactor.create_post(content, clubId, title, authorName=authorName, date=date_time)
+        prevClub = interactor.get_collection('club').read(clubId)
+        print("Prev club posts")
+        if prevClub == None:
+            return render_template("error.html", data=create_error_data("Could not find club"))
+        interactor.get_collection('club').update(clubId, {
+            "posts": prevClub["posts"] + 1
+        })
         return redirect("/" + clubId)
 
     data = {}
@@ -223,9 +247,42 @@ def deleteClub(clubId):
     interactor.get_collection("club").delete(clubId)
     return redirect("/admin")
 
-@app.route('/post')
-def examplePost():
-    return render_template('post.html')
+@app.route('/<clubId>/<postId>', methods=["GET", "POST"])
+def post(clubId, postId):
+    user_id, user_type = get_user()
+    if user_id == None:
+        return redirect("/auth/login")
+
+    if request.method == "POST":
+        print("Processing comment")
+        authorName = ""
+        if user_type == "student":
+            student = interactor.get_collection("student").read(user_id)
+            authorName = student["name"]
+        elif user_type == "sponsor":
+            sponsor = interactor.get_collection("sponsor").read(user_id)
+            authorName = sponsor["name"]
+        else:
+            school = interactor.get_collection("school").read(user_id)
+            authorName = school["name"]
+
+        content = request.form.get("reply")
+        now = datetime.now()
+        date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+        interactor.create_comment(postId=postId, authorName=authorName, content=content, timestamp=date_time)
+        return redirect('/' + clubId + '/' + postId)
+
+    data = {}
+    comments = interactor.get_comments_by_post_id(postId)
+    post = interactor.get_collection("post").read(postId)
+    if post == None:
+        return render_template("error.html", data=create_error_data("Could not find post"))
+
+    data["clubId"] = clubId 
+    data["postId"] = postId
+    data["comments"] = comments
+    data["post"] = post
+    return render_template('post.html', data=data)
 
 if __name__ == '__main__':
     app.run(debug=True)

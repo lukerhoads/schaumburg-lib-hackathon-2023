@@ -10,7 +10,7 @@
     {% endif %}
     {% for post in data.posts %}
         <div>
-            <h3>{{ post.title }}</h3>
+            <a href="{{ data.club.id }}/{{ post.id }}"><h3>{{ post.title }}</h3></a>
             <p>{{ post.content }}</p>
         </div>
     {% endfor %}
