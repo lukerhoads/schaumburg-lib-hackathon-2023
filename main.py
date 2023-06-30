@@ -69,7 +69,7 @@ def club():
         tags = request.form.get("tags")
         description = request.form.get("description")
         if user_type == "student":
-            id = interactor.create_club(name=name, tags=tags, studentId=user_id)
+            id = interactor.create_club(name=name, tags=tags, studentId=user_id, description=description)
         elif user_type == "admin":
             id = interactor.create_club_as_admin(name=name, tags=tags, adminId=user_id, description=description)
         else:

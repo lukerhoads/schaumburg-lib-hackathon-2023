@@ -1,23 +1,57 @@
 {% extends "base.html" %}
 {% block title %}{{ data.club.name }}{% endblock %}
 {% block content %}
-    <h1>Club name: {{ data.club.name }}</h1>
-    <p>Club school: {{ data.clubSchoolName }}</p> 
-    <p>Club description: {{ data.club.description }}</p> 
+    <style type="text/css">
+        .posts {
+            background-color: #cccccc;
+        }
+        .clubs {
+            min-height: calc(100vh - 100px);
+            max-height: 100%; 
+            overflow-y: auto; 
+        }
+    </style>
 
-    {% if data.posts|length > 0 %}
-        <h2>Posts:</h2>
-    {% endif %}
-    {% for post in data.posts %}
-        <div>
-            <a href="{{ data.club.id }}/{{ post.id }}"><h3>{{ post.title }}</h3></a>
-            <p>{{ post.content }}</p>
+    <div class="container p-4">
+        <div class="container mb-4">
+            <h1>{{ data.club.name }}</h1>
+            <p><b>Description: </b>{{ data.club.description }}</p> 
+            {% if data.userInClub == False %}
+                <a href="{{ data.club.id }}/join"><button type="button" class="btn btn-primary">Join</button></a>
+            {% endif %}
         </div>
-    {% endfor %}
-
-    {% if data.userInClub == False %}
-        <a href="{{ data.club.id }}/join">Join</a>
-    {% else %}
-        <a href="{{ data.club.id }}/post">Create post</a>
-    {% endif %}
+        <hr>
+        <div class="row">
+            <div class="col">
+                <h2>Posts</h2>
+            </div>
+            {% if data.userInClub %}
+                <div class="col">
+                    <a href="{{ data.club.id }}/post"><button type="button" class="btn btn-primary float-end">Create Post</button></a>
+                </div>
+                
+            {% endif %}
+        </div>
+        <div class="container posts clubs py-4">
+            {% if data.posts|length == 0 %}
+                <h2 class="text-center text-dark">No posts.</h2>
+            {% else %}
+                <div class="group-list">
+                    {% for post in data.posts %}
+                        <div class="container bg-white border mb-1 ml-4 mr-4">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="text-truncate"><a class="link-dark link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ post.id }}">{{ post.title }}</a></h3>
+                                    <p>Posted by <!--USERNAME OF POSTER--></p>
+                                </div>
+                                <div class="col">
+                                    <p>0 Comments</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

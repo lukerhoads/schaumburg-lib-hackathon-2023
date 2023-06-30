@@ -1,22 +1,58 @@
 {% extends "base.html" %}
 {% block title %}Clubs{% endblock %}
 {% block content %}
-    <h1>Hello, {{ data.user.name }}</h1> 
-    {% if data.type != "admin" %}
-        <p>You attend {{ data.schoolName }}</p>    
-    {% endif %}
-    <h1>Clubs:</h1>
-    {% for club in data.clubs %}
-        <div>
-            <div>Club name: {{ club.name }}</div>
-            <a href="{{ club.id }}">Link</a>
+    <style type="text/css">
+        .posts {
+            background-color: #cccccc;
+        }
+        .clubs {
+            min-height: calc(100vh - 100px);
+            max-height: 100%; 
+            overflow-y: auto; 
+        }
+    </style>
+    <div class="container p-4">
+        <h1>Hello, {{ data.user.name }}!</h1> 
+        {% if data.type != "admin" %}
+            <p>You attend {{ data.schoolName }}</p>    
+        {% else %}
+            <a href="/admin"><button type="button" class="btn btn-success">Admin Panel</button></a>
+        {% endif %}
+
+        <hr>
+
+        <div class="row mb-2">
+            <div class="col">
+                <h1>Clubs</h1>
+            </div>
+            <div class="col">
+                <p class="float-end">New club? <a href="/create-club"><button type="button" class="btn btn-primary">Create one</button></a> </p>
+            </div>
         </div>
-    {% endfor %}
-    {% if data.clubs|length == 0 %}
-        <p>No clubs.</p>
-    {% endif %}
-    {% if data.type == "admin" %}
-        <a href="/admin">Admin panel</a>
-    {% endif %}
-    <p>New club? <a href="/create-club">Create one</a> </p>
+        
+        <div class="container posts clubs py-4">
+            {% if data.clubs|length == 0 %}
+                <h2 class="text-center text-dark">No clubs.</h2>
+            {% else %}
+                <div class="group-list">
+                    {% for club in data.clubs %}
+                        <div class="container bg-white border mb-1 ml-4 mr-4">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3><a class="link-dark link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ club.id }}">{{ club.name }}</a></h3>
+                                    <p>Club description</p>
+                                </div>
+                                <div class="col">
+                                    <p>0 Posts</p>
+                                </div>
+                                <div class="col">
+                                    <p>0 Members</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
